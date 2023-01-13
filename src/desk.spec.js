@@ -25,4 +25,10 @@ describe('Writing', () => {
 
     expect(durability).toBe(995);
   });
+
+  it('should degrade the point of the pencil by 2 for each uppercase letter written', () => {
+    const {durability} = write('Bravo', writingData);
+
+    expect(durability).toBe(994);
+  });
 });
