@@ -2,8 +2,8 @@ const MAX_SHARPNESS = 1000;
 const SINGLE_SPACE = ' ';
 const EMPTY = '';
 
-const write = (pencil, toWrite) => {
-  const { paper, sharpness } = pencil;
+const write = (utensils, toWrite) => {
+  const { paper, pencil: { sharpness } } = utensils;
 
   return toWrite
     .split(EMPTY)
@@ -15,7 +15,7 @@ const write = (pencil, toWrite) => {
         sharpnessReduction = 0;
       }
 
-      const currentSharpness = accumulator.sharpness;
+      const currentSharpness = accumulator.pencil.sharpness;
       if (currentSharpness <= 0) {
         sharpnessReduction = 0;
         charToWrite = SINGLE_SPACE;
@@ -23,22 +23,22 @@ const write = (pencil, toWrite) => {
 
       return {
         paper: `${accumulator.paper}${charToWrite}`,
-        sharpness: currentSharpness - sharpnessReduction
+        pencil: { sharpness: currentSharpness - sharpnessReduction }
       };
-    }, { paper: paper || EMPTY, sharpness });
+    }, { paper: paper || EMPTY, pencil: { sharpness } });
 };
 
-const sharpen = data => ({ ...data, sharpness: MAX_SHARPNESS });
+const sharpen = utensils => ({ ...utensils, pencil: { ...utensils.pencil, sharpness: MAX_SHARPNESS } });
 
-const erase = (pencil, toErase) => {
-  const { paper } = pencil;
+const erase = (utensils, toErase) => {
+  const { paper } = utensils;
   const lastIndexOfThing = paper.lastIndexOf(toErase);
 
   const upperHalf = paper.substring(0, lastIndexOfThing);
   const lowerHalf = paper.substring(lastIndexOfThing + toErase.length);
 
   return {
-    ...pencil,
+    ...utensils,
     paper: `${upperHalf}${lowerHalf}`
   };
 };
