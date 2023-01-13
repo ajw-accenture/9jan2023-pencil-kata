@@ -1,4 +1,4 @@
-const {write} = require('./desk');
+const {write, sharpen} = require('./desk');
 
 describe('Writing', () => {
   let writingData = {};
@@ -50,5 +50,17 @@ describe('Writing', () => {
     const {durability} = write('At the\ncinemas', writingData);
 
     expect(durability).toBe(987);
+  });
+
+  it('should be able to write again after sharpening', () => {
+    let data = {...writingData, durability: 3};
+    const firstResult = write('Hello', data);
+
+    expect(firstResult.paper).toBe('He   ');
+
+    data = sharpen(data);
+    const secondResult = write('Hello', data);
+
+    expect(secondResult.paper).toBe('Hello');
   });
 });

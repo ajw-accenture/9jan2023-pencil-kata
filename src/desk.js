@@ -1,3 +1,5 @@
+const MAX_DURABILITY = 1000;
+
 const write = (thing, data) => {
     const {paper, durability} = data;
 
@@ -24,6 +26,9 @@ const write = (thing, data) => {
         }, {paper: paper || '', durability});
 };
 
+const sharpen = data => ({...data, durability: MAX_DURABILITY});
+
 module.exports = {
-    write
+    write,
+    sharpen
 };
