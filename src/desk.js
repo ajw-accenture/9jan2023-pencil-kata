@@ -7,6 +7,10 @@ const write = (thing, data) => {
             let duraReduction = character === character.toUpperCase() ? 2 : 1;
             let charToWrite = character;
 
+            if (character === ' ' || character === '\n') {
+                duraReduction = 0;
+            }
+
             const currentDura = accumulator.durability;
             if (currentDura <= 0) {
                 duraReduction = 0;

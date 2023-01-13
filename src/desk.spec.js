@@ -9,7 +9,7 @@ describe('Writing', () => {
 
   it('should write on a piece of paper', () => {
     const {paper} = write('Hello, world!', writingData);
-    
+
     expect(paper).toBe('Hello, world!');
   });
 
@@ -44,5 +44,11 @@ describe('Writing', () => {
     const {durability} = write('Charlie', data);
 
     expect(durability).toBe(0);
+  });
+
+  it('should expend no durability to write spaces and newline characters', () => {
+    const {durability} = write('At the\ncinemas', writingData);
+
+    expect(durability).toBe(987);
   });
 });
