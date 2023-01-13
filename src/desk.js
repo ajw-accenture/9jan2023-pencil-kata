@@ -37,11 +37,12 @@ const erase = (utensils, toErase) => {
 
   const upperHalf = paper.substring(0, lastIndexOfThing);
   const lowerHalf = paper.substring(lastIndexOfThing + tokenToErase.length);
+  const spaces = rubber < toErase.length ? [ ...Array(rubber) ].reduce(acc => acc + ' ', '') : '';
 
   return {
     ...utensils,
     pencil: { ...pencil, rubber: rubber - tokenToErase.length },
-    paper: `${upperHalf}${lowerHalf}`
+    paper: `${upperHalf}${spaces}${lowerHalf}`
   };
 };
 
