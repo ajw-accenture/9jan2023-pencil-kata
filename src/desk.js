@@ -1,4 +1,6 @@
-const write = (thing, {paper, pencil, durability}) => {
+const write = (thing, data) => {
+    const {paper, pencil, durability} = data;
+
     return {
         paper: `${paper || ''}${thing}`,
         pencil,
