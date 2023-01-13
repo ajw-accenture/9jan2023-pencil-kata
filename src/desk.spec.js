@@ -1,4 +1,4 @@
-const {write, sharpen} = require('./desk');
+const {write, sharpen, erase} = require('./desk');
 
 describe('Writing', () => {
   let writingData = {};
@@ -62,5 +62,12 @@ describe('Writing', () => {
     const secondResult = write('Hello', data);
 
     expect(secondResult.paper).toBe('Hello');
+  });
+
+  it('should erase the last occurrence of the specified word to erase', () => {
+    let data = {...writingData, paper: 'The world\'s greatest detective in the world.'};
+    const {paper} = erase(data, 'world');
+
+    expect(paper).toBe('The world\'s greatest detective in the .');
   });
 });

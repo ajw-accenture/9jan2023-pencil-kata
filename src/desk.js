@@ -28,7 +28,21 @@ const write = (thing, data) => {
 
 const sharpen = data => ({...data, durability: MAX_DURABILITY});
 
+const erase = (data, thing) => {
+  const {paper} = data;
+  const lastIndexOfThing = paper.lastIndexOf(thing);
+
+  const upperHalf = paper.substring(0, lastIndexOfThing);
+  const lowerHalf = paper.substring(lastIndexOfThing + thing.length);
+
+  return {
+    ...data,
+    paper: `${upperHalf}${lowerHalf}`
+  };
+};
+
 module.exports = {
   write,
-  sharpen
+  sharpen,
+  erase
 };
