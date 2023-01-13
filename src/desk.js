@@ -32,14 +32,15 @@ const sharpen = utensils => ({ ...utensils, pencil: { ...utensils.pencil, sharpn
 
 const erase = (utensils, toErase) => {
   const { paper, pencil, pencil: { rubber } } = utensils;
-  const lastIndexOfThing = paper.lastIndexOf(toErase);
+  const tokenToErase = rubber < toErase.length ? toErase.substring(toErase.length - rubber) : toErase;
+  const lastIndexOfThing = paper.lastIndexOf(tokenToErase);
 
   const upperHalf = paper.substring(0, lastIndexOfThing);
-  const lowerHalf = paper.substring(lastIndexOfThing + toErase.length);
+  const lowerHalf = paper.substring(lastIndexOfThing + tokenToErase.length);
 
   return {
     ...utensils,
-    pencil: { ...pencil, rubber: rubber - toErase.length },
+    pencil: { ...pencil, rubber: rubber - tokenToErase.length },
     paper: `${upperHalf}${lowerHalf}`
   };
 };

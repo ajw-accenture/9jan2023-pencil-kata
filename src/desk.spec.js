@@ -77,4 +77,11 @@ describe('Writing', () => {
 
     expect(rubber).toBe(995);
   });
+
+  it('should erase only the characters it has enough rubber to erase', () => {
+    let utensils = { ...basicUtensils, paper: 'Hello to everyone in the world', pencil: { rubber: 3 } };
+    const { paper } = erase(utensils, 'everyone');
+
+    expect(paper).toBe('Hello to every in the world');
+  });
 });
