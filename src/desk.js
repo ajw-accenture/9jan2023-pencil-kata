@@ -1,48 +1,44 @@
-const MAX_DURABILITY = 1000;
+const MAX_SHARPNESS = 1000;
 
-const write = (thing, data) => {
-  const { paper, durability } = data;
+const write = (pencil, toWrite) => {
+  const { paper, sharpness } = pencil;
 
-  return thing
+  return toWrite
     .split('')
     .reduce((accumulator, character) => {
-      let duraReduction = character === character.toUpperCase() ? 2 : 1;
+      let sharpnessReduction = character === character.toUpperCase() ? 2 : 1;
       let charToWrite = character;
 
       if (character === ' ' || character === '\n') {
-        duraReduction = 0;
+        sharpnessReduction = 0;
       }
 
-      const currentDura = accumulator.durability;
-      if (currentDura <= 0) {
-        duraReduction = 0;
+      const currentSharpness = accumulator.sharpness;
+      if (currentSharpness <= 0) {
+        sharpnessReduction = 0;
         charToWrite = ' ';
       }
 
       return {
         paper: `${accumulator.paper}${charToWrite}`,
-        durability: currentDura - duraReduction
+        sharpness: currentSharpness - sharpnessReduction
       };
-    }, { paper: paper || '', durability });
+    }, { paper: paper || '', sharpness });
 };
 
-const sharpen = data => ({ ...data, durability: MAX_DURABILITY });
+const sharpen = data => ({ ...data, sharpness: MAX_SHARPNESS });
 
-const erase = (data, thing) => {
-  const { paper } = data;
-  const lastIndexOfThing = paper.lastIndexOf(thing);
+const erase = (pencil, toErase) => {
+  const { paper } = pencil;
+  const lastIndexOfThing = paper.lastIndexOf(toErase);
 
   const upperHalf = paper.substring(0, lastIndexOfThing);
-  const lowerHalf = paper.substring(lastIndexOfThing + thing.length);
+  const lowerHalf = paper.substring(lastIndexOfThing + toErase.length);
 
   return {
-    ...data,
+    ...pencil,
     paper: `${upperHalf}${lowerHalf}`
   };
 };
 
-module.exports = {
-  write,
-  sharpen,
-  erase
-};
+module.exports = { write, sharpen, erase };

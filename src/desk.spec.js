@@ -1,72 +1,72 @@
 const { write, sharpen, erase } = require('./desk');
 
 describe('Writing', () => {
-  let writingData = {};
+  let simplePencil = {};
 
   beforeEach(() => {
-    writingData = { paper: '', durability: 1000 };
+    simplePencil = { paper: '', sharpness: 1000 };
   });
 
   it('should write on a piece of paper', () => {
-    const { paper } = write('Hello, world!', writingData);
+    const { paper } = write(simplePencil, 'Hello, world!');
 
     expect(paper).toBe('Hello, world!');
   });
 
   it('should write after any text already written on the piece of paper', () => {
-    const data = { ...writingData, paper: 'Mary had ' };
-    const { paper } = write('a little lamb', data);
+    const pencil = { ...simplePencil, paper: 'Mary had ' };
+    const { paper } = write(pencil, 'a little lamb');
 
     expect(paper).toBe('Mary had a little lamb');
   });
 
   it('should degrade the point of the pencil by 1 for each lowercase letter written', () => {
-    const { durability } = write('alpha', writingData);
+    const { sharpness } = write(simplePencil, 'alpha');
 
-    expect(durability).toBe(995);
+    expect(sharpness).toBe(995);
   });
 
   it('should degrade the point of the pencil by 2 for each uppercase letter written', () => {
-    const { durability } = write('Bravo', writingData);
+    const { sharpness } = write(simplePencil, 'Bravo');
 
-    expect(durability).toBe(994);
+    expect(sharpness).toBe(994);
   });
 
   it('should place blanks for each character the pencil cannot write because it has dulled', () => {
-    const data = { ...writingData, durability: 3 };
-    const { paper } = write('Charlie', data);
+    const pencil = { ...simplePencil, sharpness: 3 };
+    const { paper } = write(pencil, 'Charlie');
 
     expect(paper).toBe('Ch     ');
   });
 
-  it('should keep the durability at zero even if the pencil is writing while dulled', () => {
-    const data = { ...writingData, durability: 3 };
-    const { durability } = write('Charlie', data);
+  it('should keep sharpness at zero even if the pencil is writing while dulled', () => {
+    const pencil = { ...simplePencil, sharpness: 3 };
+    const { sharpness } = write(pencil, 'Charlie');
 
-    expect(durability).toBe(0);
+    expect(sharpness).toBe(0);
   });
 
-  it('should expend no durability to write spaces and newline characters', () => {
-    const { durability } = write('At the\ncinemas', writingData);
+  it('should not expend sharpness to write spaces and newline characters', () => {
+    const { sharpness } = write(simplePencil, 'At the\ncinemas');
 
-    expect(durability).toBe(987);
+    expect(sharpness).toBe(987);
   });
 
   it('should be able to write again after sharpening', () => {
-    let data = { ...writingData, durability: 3 };
-    const firstResult = write('Hello', data);
+    let pencil = { ...simplePencil, sharpness: 3 };
+    const firstResult = write(pencil, 'Hello');
 
     expect(firstResult.paper).toBe('He   ');
 
-    data = sharpen(data);
-    const secondResult = write('Hello', data);
+    pencil = sharpen(pencil);
+    const secondResult = write(pencil, 'Hello');
 
     expect(secondResult.paper).toBe('Hello');
   });
 
   it('should erase the last occurrence of the specified word to erase', () => {
-    let data = { ...writingData, paper: 'The world\'s greatest detective in the world.' };
-    const { paper } = erase(data, 'world');
+    let pencil = { ...simplePencil, paper: 'The world\'s greatest detective in the world.' };
+    const { paper } = erase(pencil, 'world');
 
     expect(paper).toBe('The world\'s greatest detective in the .');
   });
