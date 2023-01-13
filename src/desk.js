@@ -1,8 +1,8 @@
-const write = (thingsToWrite, {paper, pencil}) => {
+const write = (thing, {paper, pencil}) => {
     return {
-        paper: thingsToWrite,
+        paper: `${paper || ''}${thing}`,
         pencil
-    }
+    };
 };
 
 module.exports = {
