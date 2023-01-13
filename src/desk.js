@@ -5,12 +5,17 @@ const write = (thing, data) => {
         .split('')
         .reduce((accumulator, character) => {
             let duraReduction = character === character.toUpperCase() ? 2 : 1;
-            const charToWrite = accumulator.durability > 0 ? character : ' ';
-            duraReduction = accumulator.durability > 0 ? duraReduction : 0;
+            let charToWrite = character;
+
+            const currentDura = accumulator.durability;
+            if (currentDura <= 0) {
+                duraReduction = 0;
+                charToWrite = ' ';
+            }
 
             return {
                 paper: `${accumulator.paper}${charToWrite}`,
-                durability: accumulator.durability - duraReduction
+                durability: currentDura - duraReduction
             };
         }, {paper: paper || '', durability});
 };
