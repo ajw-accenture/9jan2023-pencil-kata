@@ -31,4 +31,18 @@ describe('Writing', () => {
 
     expect(durability).toBe(994);
   });
+
+  it('should place blanks for each character the pencil cannot write because it has dulled', () => {
+    const data = {...writingData, durability: 3};
+    const {paper} = write('Charlie', data);
+
+    expect(paper).toBe('Ch     ');
+  });
+
+  it('should keep the durability at zero even if the pencil is writing while dulled', () => {
+    const data = {...writingData, durability: 3};
+    const {durability} = write('Charlie', data);
+
+    expect(durability).toBe(0);
+  });
 });
