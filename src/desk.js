@@ -1,7 +1,7 @@
 const MAX_DURABILITY = 1000;
 
 const write = (thing, data) => {
-  const {paper, durability} = data;
+  const { paper, durability } = data;
 
   return thing
     .split('')
@@ -23,13 +23,13 @@ const write = (thing, data) => {
         paper: `${accumulator.paper}${charToWrite}`,
         durability: currentDura - duraReduction
       };
-    }, {paper: paper || '', durability});
+    }, { paper: paper || '', durability });
 };
 
-const sharpen = data => ({...data, durability: MAX_DURABILITY});
+const sharpen = data => ({ ...data, durability: MAX_DURABILITY });
 
 const erase = (data, thing) => {
-  const {paper} = data;
+  const { paper } = data;
   const lastIndexOfThing = paper.lastIndexOf(thing);
 
   const upperHalf = paper.substring(0, lastIndexOfThing);
