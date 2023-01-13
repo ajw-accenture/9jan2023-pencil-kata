@@ -9,6 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.19.0"
+  },
   "devDependencies": {
     "jest": "^29.3.1"
   }
