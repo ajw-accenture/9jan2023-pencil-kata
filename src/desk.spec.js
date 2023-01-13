@@ -4,7 +4,7 @@ describe('Writing', () => {
   let basicUtensils = {};
 
   beforeEach(() => {
-    basicUtensils = { paper: '', pencil: { sharpness: 1000 } };
+    basicUtensils = { paper: '', pencil: { sharpness: 1000, rubber: 1000 } };
   });
 
   it('should write on a piece of paper', () => {
@@ -20,13 +20,13 @@ describe('Writing', () => {
     expect(paper).toBe('Mary had a little lamb');
   });
 
-  it('should degrade the point of the pencil by 1 for each lowercase letter written', () => {
+  it('should reduce pencil sharpness by 1 for each lowercase letter written', () => {
     const { pencil: { sharpness } } = write(basicUtensils, 'alpha');
 
     expect(sharpness).toBe(995);
   });
 
-  it('should degrade the point of the pencil by 2 for each uppercase letter written', () => {
+  it('should reduce pencil sharpness by 2 for each uppercase letter written', () => {
     const { pencil: { sharpness } } = write(basicUtensils, 'Bravo');
 
     expect(sharpness).toBe(994);
@@ -69,5 +69,12 @@ describe('Writing', () => {
     const { paper } = erase(utensils, 'world');
 
     expect(paper).toBe('The world\'s greatest detective in the .');
+  });
+
+  it('should reduce pencil rubber by 1 for each character erased', () => {
+    let utensils = { ...basicUtensils, paper: 'The world\'s greatest detective in the world.' };
+    const { pencil: { rubber } } = erase(utensils, 'world');
+
+    expect(rubber).toBe(995);
   });
 });

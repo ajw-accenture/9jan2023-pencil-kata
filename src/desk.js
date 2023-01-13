@@ -31,7 +31,7 @@ const write = (utensils, toWrite) => {
 const sharpen = utensils => ({ ...utensils, pencil: { ...utensils.pencil, sharpness: MAX_SHARPNESS } });
 
 const erase = (utensils, toErase) => {
-  const { paper } = utensils;
+  const { paper, pencil, pencil: { rubber } } = utensils;
   const lastIndexOfThing = paper.lastIndexOf(toErase);
 
   const upperHalf = paper.substring(0, lastIndexOfThing);
@@ -39,6 +39,7 @@ const erase = (utensils, toErase) => {
 
   return {
     ...utensils,
+    pencil: { ...pencil, rubber: rubber - toErase.length },
     paper: `${upperHalf}${lowerHalf}`
   };
 };
