@@ -1,6 +1,7 @@
 const MAX_SHARPNESS = 1000;
 const SINGLE_SPACE = ' ';
 const EMPTY = '';
+const AROBASE = '@';
 
 const _overwrite = (utensil, token, atIndex) => {
   const { paper } = utensil;
@@ -10,14 +11,10 @@ const _overwrite = (utensil, token, atIndex) => {
 
   for (let i = atIndex, p = 0; i < stopAt; i++, p++) {
     const currentCharOnPaper = paperLetters[i];
-
-    paperLetters[i] = currentCharOnPaper !== ' ' ? '@' : tokenLetters[p];
+    paperLetters[i] = currentCharOnPaper !== SINGLE_SPACE ? AROBASE : tokenLetters[p];
   }
 
-  return {
-    ...utensil,
-    paper: paperLetters.join('')
-  };
+  return { ...utensil, paper: paperLetters.join(EMPTY) };
 };
 
 const _append = (utensils, token) => {
@@ -47,7 +44,7 @@ const _append = (utensils, token) => {
 };
 
 const write = (utensils, token) => {
-  const written = _append(utensils, token, -1);
+  const written = _append(utensils, token);
 
   return {
     pencil: { ...written.pencil },
@@ -65,7 +62,7 @@ const _erase = (utensils, token) => {
   const upperHalf = paper.substring(0, indexOfToken);
   const lowerHalf = paper.substring(indexOfToken + tokenToErase.length);
   const spacesToCreate = rubber < token.length ? rubber : token.length;
-  const spaces = [ ...Array(spacesToCreate) ].reduce(acc => acc + ' ', '');
+  const spaces = [ ...Array(spacesToCreate) ].reduce(acc => acc + SINGLE_SPACE, EMPTY);
 
   return {
     ...utensils,
@@ -78,11 +75,7 @@ const _erase = (utensils, token) => {
 const erase = (utensils, toErase) => {
   const erased = _erase(utensils, toErase);
 
-  return {
-    ...utensils,
-    pencil: { ...erased.pencil },
-    paper: erased.paper
-  };
+  return { ...utensils, pencil: { ...erased.pencil }, paper: erased.paper };
 };
 
 const edit = (utensils, atToken, editToken) => {
