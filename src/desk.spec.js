@@ -1,4 +1,4 @@
-const { write, sharpen, erase } = require('./desk');
+const { write, sharpen, erase, edit } = require('./desk');
 
 describe('Writing', () => {
   let basicUtensils = {};
@@ -83,5 +83,12 @@ describe('Writing', () => {
     const { paper } = erase(utensils, 'everyone');
 
     expect(paper).toBe('Hello to every    in the world');
+  });
+
+  it('should edit the specified characters', () => {
+    const utensils = { ...basicUtensils, paper: 'Hello to everyone in the world' };
+    const { paper } = edit(utensils, 'everyone', 'y\'all');
+
+    expect(paper).toBe('Hello to y\'all    in the world');
   });
 });

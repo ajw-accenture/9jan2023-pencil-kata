@@ -2,6 +2,22 @@ const MAX_SHARPNESS = 1000;
 const SINGLE_SPACE = ' ';
 const EMPTY = '';
 
+const _overwrite = (utensil, token, atIndex) => {
+  const { paper } = utensil;
+  const paperLetters = paper.split(EMPTY);
+  const tokenLetters = token.split(EMPTY);
+  const stopAt = atIndex + tokenLetters.length;
+
+  for (let i = atIndex, p = 0; i < stopAt; i++, p++) {
+    paperLetters[i] = tokenLetters[p];
+  }
+
+  return {
+    ...utensil,
+    paper: paperLetters.join('')
+  };
+};
+
 const _append = (utensils, token) => {
   const { paper, pencil: { sharpness } } = utensils;
 
@@ -51,6 +67,7 @@ const _erase = (utensils, token) => {
 
   return {
     ...utensils,
+    indexOfToken,
     pencil: { ...pencil, rubber: rubber - tokenToErase.length },
     paper: `${upperHalf}${spaces}${lowerHalf}`
   };
@@ -66,4 +83,11 @@ const erase = (utensils, toErase) => {
   };
 };
 
-module.exports = { write, sharpen, erase };
+const edit = (utensils, atToken, editToken) => {
+  const erased = _erase(utensils, atToken);
+  const written = _overwrite(erased, editToken, erased.indexOfToken);
+
+  return written;
+};
+
+module.exports = { write, sharpen, erase, edit };
