@@ -6,6 +6,7 @@
   "scripts": {
     "pretest": "npm run check",
     "test": "jest",
+    "fest": "jest",
     "check": "eslint src/**/*.js",
     "fix": "npm run check -- --fix"
   },
