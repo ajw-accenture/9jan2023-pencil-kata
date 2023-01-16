@@ -68,7 +68,7 @@ describe('Writing', () => {
     let utensils = { ...basicUtensils, paper: 'The world\'s greatest detective in the world.' };
     const { paper } = erase(utensils, 'world');
 
-    expect(paper).toBe('The world\'s greatest detective in the .');
+    expect(paper).toBe('The world\'s greatest detective in the      .');
   });
 
   it('should reduce pencil rubber by 1 for each character erased', () => {

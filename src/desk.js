@@ -2,20 +2,20 @@ const MAX_SHARPNESS = 1000;
 const SINGLE_SPACE = ' ';
 const EMPTY = '';
 
-const _write = (utensils, token) => {
+const _append = (utensils, token) => {
   const { paper, pencil: { sharpness } } = utensils;
 
   return token
     .split(EMPTY)
     .reduce((accumulator, character) => {
-      let sharpnessReduction = character === character.toUpperCase() ? 2 : 1;
+      const currentSharpness = accumulator.pencil.sharpness;
       let charToWrite = character;
+      let sharpnessReduction = character === character.toUpperCase() ? 2 : 1;
 
       if (character === SINGLE_SPACE || character === '\n') {
         sharpnessReduction = 0;
       }
 
-      const currentSharpness = accumulator.pencil.sharpness;
       if (currentSharpness <= 0) {
         sharpnessReduction = 0;
         charToWrite = SINGLE_SPACE;
@@ -29,7 +29,7 @@ const _write = (utensils, token) => {
 };
 
 const write = (utensils, token) => {
-  const written = _write(utensils, token);
+  const written = _append(utensils, token, -1);
 
   return {
     pencil: { ...written.pencil },
@@ -42,11 +42,12 @@ const sharpen = utensils => ({ ...utensils, pencil: { ...utensils.pencil, sharpn
 const _erase = (utensils, token) => {
   const { paper, pencil, pencil: { rubber } } = utensils;
   const tokenToErase = rubber < token.length ? token.substring(token.length - rubber) : token;
-  const lastIndexOfToken = paper.lastIndexOf(tokenToErase);
+  const indexOfToken = paper.lastIndexOf(tokenToErase);
 
-  const upperHalf = paper.substring(0, lastIndexOfToken);
-  const lowerHalf = paper.substring(lastIndexOfToken + tokenToErase.length);
-  const spaces = rubber < token.length ? [ ...Array(rubber) ].reduce(acc => acc + ' ', '') : '';
+  const upperHalf = paper.substring(0, indexOfToken);
+  const lowerHalf = paper.substring(indexOfToken + tokenToErase.length);
+  const spacesToCreate = rubber < token.length ? rubber : token.length;
+  const spaces = [ ...Array(spacesToCreate) ].reduce(acc => acc + ' ', '');
 
   return {
     ...utensils,
