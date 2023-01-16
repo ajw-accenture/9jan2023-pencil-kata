@@ -9,7 +9,9 @@ const _overwrite = (utensil, token, atIndex) => {
   const stopAt = atIndex + tokenLetters.length;
 
   for (let i = atIndex, p = 0; i < stopAt; i++, p++) {
-    paperLetters[i] = tokenLetters[p];
+    const currentCharOnPaper = paperLetters[i];
+
+    paperLetters[i] = currentCharOnPaper !== ' ' ? '@' : tokenLetters[p];
   }
 
   return {

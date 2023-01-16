@@ -91,4 +91,11 @@ describe('Writing', () => {
 
     expect(paper).toBe('Hello to y\'all    in the world');
   });
+
+  it('should edit the specified characters, replacing overwritten, non-space characters with an @ symbol', () => {
+    const utensils = { ...basicUtensils, paper: 'How to find a rhinoceros' };
+    const { paper } = edit(utensils, 'find', 'entertain');
+
+    expect(paper).toBe('How to enter@a@@inoceros');
+  });
 });
