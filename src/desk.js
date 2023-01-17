@@ -2,6 +2,7 @@ const MAX_SHARPNESS = 1000;
 const SINGLE_SPACE = ' ';
 const EMPTY = '';
 const AROBASE = '@';
+const NEWLINE = '\n';
 
 const _overwrite = (utensil, token, atIndex) => {
   const { paper } = utensil;
@@ -27,7 +28,7 @@ const _append = (utensils, token) => {
       let charToWrite = character;
       let sharpnessReduction = character === character.toUpperCase() ? 2 : 1;
 
-      if (character === SINGLE_SPACE || character === '\n') {
+      if (character === SINGLE_SPACE || character === NEWLINE) {
         sharpnessReduction = 0;
       }
 
