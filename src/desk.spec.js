@@ -98,4 +98,18 @@ describe('Writing', () => {
 
     expect(paper).toBe('How to enter@a@@inoceros');
   });
+
+  it('should reduce pencil rubber for each character erased', () => {
+    const utensils = { ...basicUtensils, paper: 'How to find a rhinoceros' };
+    const { pencil: { rubber } } = edit(utensils, 'find', 'entertain');
+
+    expect(rubber).toBe(996);
+  });
+
+  it('should reduce pencil sharpness for each character written while edited except for overwrites', () => {
+    const utensils = { ...basicUtensils, paper: 'How to find a rhinoceros' };
+    const { pencil: { sharpness } } = edit(utensils, 'find', 'Entertain');
+
+    expect(sharpness).toBe(993);
+  });
 });

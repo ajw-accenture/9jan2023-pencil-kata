@@ -5,17 +5,25 @@ const AROBASE = '@';
 const NEWLINE = '\n';
 
 const _overwrite = (utensil, token, atIndex) => {
-  const { paper } = utensil;
+  const { paper, pencil } = utensil;
   const paperLetters = paper.split(EMPTY);
   const tokenLetters = token.split(EMPTY);
   const stopAt = atIndex + tokenLetters.length;
+  let sharpness = pencil.sharpness;
 
   for (let i = atIndex, p = 0; i < stopAt; i++, p++) {
     const currentCharOnPaper = paperLetters[i];
-    paperLetters[i] = currentCharOnPaper !== SINGLE_SPACE ? AROBASE : tokenLetters[p];
+    const letterToWrite = tokenLetters[p];
+
+    if (currentCharOnPaper !== SINGLE_SPACE) {
+      paperLetters[i] = AROBASE;
+    } else {
+      paperLetters[i] = letterToWrite;
+      sharpness -= (letterToWrite === letterToWrite.toUpperCase() ? 2 : 1);
+    }
   }
 
-  return { ...utensil, paper: paperLetters.join(EMPTY) };
+  return { ...utensil, pencil: { ...pencil, sharpness }, paper: paperLetters.join(EMPTY) };
 };
 
 const _append = (utensils, token) => {
