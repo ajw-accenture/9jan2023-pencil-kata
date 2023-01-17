@@ -120,6 +120,17 @@ describe('Pencil', () => {
       expect(sharpness).toBe(993);
     });
 
+    it('should erase only the characters the pencil has enough rubber to erase', () => {
+      const utensils = {
+        ...basicUtensils,
+        paper: 'How to find a rhinoceros',
+        pencil: { ...basicUtensils.pencil, rubber: 3 }
+      };
+      const { paper } = edit(utensils, 'find', 'entertain');
+
+      expect(paper).toBe('How to @nter@a@@inoceros');
+    });
+
     it('should place blanks for each letter (or original letter, for collisions) when the pencil becomes dull', () => {
       const utensils = {
         ...basicUtensils,
