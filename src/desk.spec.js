@@ -119,5 +119,16 @@ describe('Pencil', () => {
 
       expect(sharpness).toBe(993);
     });
+
+    it('should place blanks for each letter (or original letter, for collisions) when the pencil becomes dull', () => {
+      const utensils = {
+        ...basicUtensils,
+        paper: 'How to find a rhinoceros',
+        pencil: { ...basicUtensils.pencil, sharpness: 3 }
+      };
+      const { paper } = edit(utensils, 'find', 'entertain');
+
+      expect(paper).toBe('How to ent  a rhinoceros');
+    });
   });
 });

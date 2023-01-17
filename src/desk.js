@@ -29,9 +29,15 @@ const _overwrite = (utensils, token, atIndex) => {
     const letterOnPaper = paperLetters[i];
     const letterToWrite = tokenLetters[p];
 
-    if (letterOnPaper !== SINGLE_SPACE) {
+    if (sharpness <= 0) {
+      if (letterOnPaper !== SINGLE_SPACE) {
+        paperLetters[i] = letterOnPaper;
+      } else {
+        paperLetters[i] = SINGLE_SPACE;
+      }
+    } else if (letterOnPaper !== SINGLE_SPACE) {
       paperLetters[i] = AROBASE;
-    } else {
+    } else if (sharpness > 0) {
       paperLetters[i] = letterToWrite;
       sharpness = _calculateNextSharpness(sharpness, letterToWrite);
     }
