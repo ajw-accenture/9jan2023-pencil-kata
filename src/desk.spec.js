@@ -1,6 +1,6 @@
 const { write, sharpen, erase, edit } = require('./desk');
 
-describe('Pencil', () => {
+describe('Desk with pencil and paper', () => {
   let basicUtensils = {};
 
   beforeEach(() => {

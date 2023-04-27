@@ -51,8 +51,8 @@ const _append = (utensils, token) => {
 
   return token
     .split(EMPTY)
-    .reduce((accumulator, letter) => {
-      const currentSharpness = accumulator.pencil.sharpness;
+    .reduce(({ pencil: { sharpness }, paper }, letter) => {
+      const currentSharpness = sharpness;
       let letterToWrite = letter;
 
       if (currentSharpness <= 0) {
@@ -60,7 +60,7 @@ const _append = (utensils, token) => {
       }
 
       return {
-        paper: `${accumulator.paper}${letterToWrite}`,
+        paper: `${paper}${letterToWrite}`,
         pencil: { sharpness: _calculateNextSharpness(currentSharpness, letterToWrite) }
       };
     }, { paper: paper || EMPTY, pencil: { sharpness } });
@@ -85,7 +85,7 @@ const _erase = (utensils, token) => {
   const upperHalf = paper.substring(0, indexOfToken);
   const lowerHalf = paper.substring(indexOfToken + tokenToErase.length);
   const spacesToCreate = rubber < token.length ? rubber : token.length;
-  const spaces = [ ...Array(spacesToCreate) ].reduce(acc => acc + SINGLE_SPACE, EMPTY);
+  const spaces = SINGLE_SPACE.repeat(spacesToCreate);
 
   return {
     ...utensils,
